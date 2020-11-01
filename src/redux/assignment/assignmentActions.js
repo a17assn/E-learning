@@ -1,11 +1,11 @@
 import axios from "axios";
 import {
-  GET_ASSIGNMENTS_LIST_FAIL,
   GET_ASSIGNMENTS_LIST_SUCCESS,
-  GET_ASSIGNMENT_DETAIL_FAIL,
+  GET_ASSIGNMENTS_LIST_FAIL,
   GET_ASSIGNMENT_DETAIL_SUCCESS,
-  // CREATE_ASSIGNMENT_FAIL,
-  // CREATE_ASSIGNMENT_SUCCESS
+  GET_ASSIGNMENT_DETAIL_FAIL,
+  CREATE_ASSIGNMENT_SUCCESS,
+  CREATE_ASSIGNMENT_FAIL
 } from "./assignmentTypes";
 
 // GET ASSIGNMENT
@@ -49,78 +49,73 @@ export const getASNTS = () => async (dispatch) => {
 
 
 export const getASNTSDetail = (id) => async (dispatch) => {
-  if (localStorage.getItem("access")) {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `JWT ${localStorage.getItem("access")}`,
-        Accept: "application/json",
-      },
-    };
+  // if (localStorage.getItem("access")) {
+  //   const config = {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `JWT ${localStorage.getItem("access")}`,
+  //       Accept: "application/json",
+  //     },
+  //   };
 
-    try {
-      const res = await axios.get(
-        `${process.env.REACT_APP_API_URL}/assignments/${id}/`,
-        config
-      );
+  try {
+    const res = await axios.get(
+      `${process.env.REACT_APP_API_URL}/assignments/${id}/`,
+      // config
+    );
 
-      dispatch({
-        type: GET_ASSIGNMENT_DETAIL_SUCCESS,
-        payload: res.data,
-      });
+    dispatch({
+      type: GET_ASSIGNMENT_DETAIL_SUCCESS,
+      payload: res.data,
+    });
 
-    } catch (err) {
-      dispatch({
-        type: GET_ASSIGNMENT_DETAIL_FAIL,
-      });
-    }
-  } else {
+  } catch (err) {
     dispatch({
       type: GET_ASSIGNMENT_DETAIL_FAIL,
     });
   }
+  // } else {
+  //   dispatch({
+  //     type: GET_ASSIGNMENT_DETAIL_FAIL,
+  //   });
+  // }
 };
 
 
 
 
-// // CREATE ASSIGNMENT 
+// CREATE ASSIGNMENT 
 
-// const createASNTStart = () => {
-//   return {
-//     type: CREATE_ASSIGNMENT_START
-//   };
-// };
+export const createGradedASNT = (asnt) => async (dispatch) => {
+  // if (localStorage.getItem("access")) {
+  // const config = {
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     Authorization: `JWT ${localStorage.getItem("access")}`,
+  //     Accept: "application/json",
+  //   },
+  // };
 
-// const createASNTSuccess = assignment => {
-//   return {
-//     type: CREATE_ASSIGNMENT_SUCCESS,
-//     assignment
-//   };
-// };
+  try {
+    const res = await axios.post(
+      `${process.env.REACT_APP_API_URL}/graded-assignments/create/`,
+      // config,
+      asnt
+    );
 
-// const createASNTFail = error => {
-//   return {
-//     type: CREATE_ASSIGNMENT_FAIL,
-//     error: error
-//   };
-// };
+    dispatch({
+      type: CREATE_ASSIGNMENT_SUCCESS,
+      payload: res.data,
+    });
 
-// export const createASNT = (asnt) => {
-//   return dispatch => {
-//     dispatch(createASNTStart());
-//     axios.defaults.headers = {
-//       "Content-Type": "application/json",
-//       Authorization: `JWT ${localStorage.getItem("access")}`,
-//       Accept: "application/json",
-//     };
-//     axios
-//       .post(`http://127.0.0.1:8000/assignments/`, asnt)
-//       .then(res => {
-//         dispatch(createASNTSuccess());
-//       })
-//       .catch(err => {
-//         dispatch(createASNTFail());
-//       });
-//   };
-// };
+  } catch (err) {
+    dispatch({
+      type: CREATE_ASSIGNMENT_FAIL,
+    });
+  }
+  // } else {
+  //   dispatch({
+  //     type: GET_ASSIGNMENT_DETAIL_FAIL,
+  //   });
+  // }
+};

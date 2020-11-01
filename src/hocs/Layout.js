@@ -12,6 +12,7 @@ import "./Layout.css";
 const { Content, Footer } = Layout;
 
 const CustomLayout = (props) => {
+  
   useEffect(() => {
     const fetchData = async () => {
       try {

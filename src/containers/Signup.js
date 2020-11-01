@@ -8,7 +8,7 @@ import { Form, Input, Button } from "antd";
 // import { Radio } from "antd";
 
 const Signup = ({ signup, isAuthenticated }) => {
-  
+
   const [formData, setFormData] = useState({
     name: "",
     is_teacher: "",
@@ -37,16 +37,8 @@ const Signup = ({ signup, isAuthenticated }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  //   const onSubmit = (e) => {
-  //     e.preventDefault();
 
-  //     if (password === re_password) {
-  //       signup({ name, email, password, re_password });
-  //       setAccountCreated(true);
-  //     }
-  //   };
-
-  const onFinish = (e) => {
+  const onFinish = () => {
     if (password === re_password) {
       signup({
         name,
@@ -102,7 +94,7 @@ const Signup = ({ signup, isAuthenticated }) => {
 
       <Form.Item
         label="Teacher"
-        // rules={[{ required: true, message: "Please input your Phone!" }]}
+      // rules={[{ required: true, message: "Please input your Phone!" }]}
       >
         <Input
           type="text"
@@ -115,7 +107,7 @@ const Signup = ({ signup, isAuthenticated }) => {
       </Form.Item>
       <Form.Item
         label="Teacher"
-        // rules={[{ required: true, message: "Please input your Phone!" }]}
+      // rules={[{ required: true, message: "Please input your Phone!" }]}
       >
         <Input
           type="text"

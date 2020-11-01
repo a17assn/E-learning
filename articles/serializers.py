@@ -78,7 +78,7 @@ class GradedAssignmentSerializer(serializers.ModelSerializer):
         graded_asnt.student = student
 
         questions = [q for q in assignment.questions.all()]
-        answers = [data['answers'][a] for a in data['answers']]
+        answers = [data['answer'][a] for a in data['answer']]
 
         answered_correct_count = 0
         for i in range(len(questions)):

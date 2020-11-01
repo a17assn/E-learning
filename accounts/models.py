@@ -40,7 +40,7 @@ class UserAccountManager(BaseUserManager):
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
 
-        return self._create_user(email,password, **extra_fields)
+        return self._create_user(email, password, **extra_fields)
 
 
 class UserAccount(AbstractBaseUser, PermissionsMixin):
@@ -51,7 +51,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    
+
     date_joined = models.DateTimeField(default=timezone.now)
     last_login = models.DateTimeField(default=timezone.now)
 
@@ -59,13 +59,10 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
 
-    REQUIRED_FIELDS = [ 'is_teacher', 'is_student']
-
+    REQUIRED_FIELDS = ['is_teacher', 'is_student']
 
     def __str__(self):
         return self.email
-
-
 
 
 class Profile(models.Model):
@@ -96,7 +93,7 @@ class Profile(models.Model):
         self.save()
 
     def __str__(self):
-        return self.name
+        return self.user.email
 
 
 @receiver(post_save, sender=UserAccount)

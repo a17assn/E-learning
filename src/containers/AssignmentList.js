@@ -1,31 +1,26 @@
-import React, { useEffect, useState } from "react";
-// import axios from "axios";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-// import * as actions from "../store/actions/assignments";
-
-// import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { List } from "antd";
-// import { Link } from "react-router-dom";
 import { getASNTS } from "../redux";
 
 const AssignmentList = (props) => {
 
-  // const [assignment, setAssignment] = useState([]);
 
   console.log(props.assignment);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await props.getASNTS();
-        // setAssignment(res.data);
+        await props.getASNTS();
 
       } catch (err) { }
     };
 
     fetchData();
   }, []);
+
+
 
 
 
@@ -65,7 +60,6 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  // mapDispatchToProps
   { getASNTS }
 )(AssignmentList);
 

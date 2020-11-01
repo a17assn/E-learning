@@ -46,9 +46,23 @@ class AssignmentDeleteView(DestroyAPIView):
     permission_classes = (permissions.IsAuthenticated, )
 
 
+class GradedAssignmentListView(ListAPIView):
+    serializer_class = GradedAssignmentSerializer
+    permission_classes = (permissions.AllowAny, )
+    queryset = GradedAssignment.objects.all()
+
+    # def get_queryset(self):
+    #     queryset = GradedAssignment.objects.all()
+    #     username = self.request.query_params.get('username', None)
+    #     if username is not None:
+    #         queryset = queryset.filter(student__username=username)
+    #     return queryset
+
+
 class GradedAssignmentCreateView(CreateAPIView):
     serializer_class = GradedAssignmentSerializer
     queryset = GradedAssignment.objects.all()
+    permission_classes = (permissions.AllowAny, )
 
     def post(self, request):
         print(request.data)
@@ -58,14 +72,3 @@ class GradedAssignmentCreateView(CreateAPIView):
         if graded_assignment:
             return Response(status=HTTP_201_CREATED)
         return Response(status=HTTP_400_BAD_REQUEST)
-
-
-class GradedAssignmentListView(ListAPIView):
-    serializer_class = GradedAssignmentSerializer
-
-    def get_queryset(self):
-        queryset = GradedAssignment.objects.all()
-        username = self.request.query_params.get('username', None)
-        if username is not None:
-            queryset = queryset.filter(student__username=username)
-        return queryset

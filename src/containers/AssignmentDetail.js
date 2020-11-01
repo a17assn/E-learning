@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-
 import { connect } from "react-redux";
-import { Card, Skeleton, message } from "antd";
+import { Card, message } from "antd";
 import Questions from "./Questions";
 import Choices from "../components/Choices";
-
-import { getASNTSDetail } from "../redux";
+import { getASNTSDetail, createGradedASNT } from "../redux";
 
 const cardStyle = {
     marginTop: "20px",
@@ -15,84 +12,49 @@ const cardStyle = {
 
 const AssignmentDetail = (props) => {
     const [usersAnswers, setUsersAnswers] = useState({
-        id: 1,
-        questions: [],
-        teacher: "",
-        title: "",
+        asntId: "",
+        email: "",
+        answer: {}
     });
 
-
+    
     useEffect(() => {
-        const id = props.match.params.id;
-
         const fetchData = async () => {
             try {
-                const res = await axios.get(
-                    `${process.env.REACT_APP_API_URL}/assignments/${id}/`,
-                    {
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `JWT ${localStorage.getItem("access")}`,
-                            Accept: "application/json",
-                        },
-                    }
-                );
-                setUsersAnswers(res.data);
+                await props.getASNTSDetail(props.match.params.id);
             } catch (err) { }
         };
-
         fetchData();
-    }, [props.match.params.id]);
+    }, []);
 
-    const {
-        id,
-        questions,
-        teacher,
-        title,
-    } = usersAnswers;
-
-    console.log(usersAnswers)
 
     const onChange = (e, qId) => {
-        console.log(e.target.value);
 
-        setUsersAnswers({ ...usersAnswers, [qId]: e.target.value });
+        setUsersAnswers({ ...usersAnswers.answers, [qId]: e.target.value });
     };
 
-    // const onFinish = (e) => {
-    //     const asnt = {
-    //         username: props.username,
-    //         asntId: props.currentAssignment.id,
-    //         answers: usersAnswers
-    //     };
-    //     props.createGradedASNT(props.token, asnt);
-    // };
 
-
-
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
         message.success("Submitting your assignment!");
-        // const { usersAnswers } = state;
         const asnt = {
-            // username: props.username,
-            // asntId: props.currentAssignment.id,
-            answers: usersAnswers
+            asntId: props.assignmentDetail.id,
+            email: props.username.email,
+            answer: usersAnswers
         };
         props.createGradedASNT(asnt);
     }
 
-
     return (
         <>
-            {Object.keys(usersAnswers).length > 0 ? (
+            {Object.keys(props.assignmentDetail).length > 0 ? (
                 <>
                     {/* {props.loading ? (
                         <Skeleton active />
                     ) : ( */}
-                    <Card title={usersAnswers.title}>
+                    <Card title={props.assignmentDetail.title}>
                         <Questions
                             submit={() => handleSubmit()}
-                            questions={usersAnswers.questions.map(q => {
+                            questions={props.assignmentDetail.questions.map(q => {
                                 return (
                                     <Card
                                         style={cardStyle}
@@ -121,16 +83,23 @@ const AssignmentDetail = (props) => {
 const mapStateToProps = state => {
     return {
         // token: state.auth.token,
-        assignment: state.Assignment.assignmentes,
+        assignmentDetail: state.Assignment.assignmentesDetail,
+        username: state.auth.user
+
         // loading: state.assignments.loading
     };
 };
 
+const mapDispatchToProps = dispatch => {
+    return {
+        getASNTSDetail: (id) => dispatch(getASNTSDetail(id)),
+        createGradedASNT: (asnt) => dispatch(createGradedASNT(asnt))
+    };
+};
 
 export default connect(
     mapStateToProps,
-    // mapDispatchToProps
-    { getASNTSDetail }
+    mapDispatchToProps
 )(AssignmentDetail);
 
 
