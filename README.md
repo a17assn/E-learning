@@ -1,3 +1,5 @@
 # project
-django with react auth
+
+django with react E-learning
+
 # E-learning
