@@ -5,7 +5,7 @@ const Step = Steps.Step;
 
 class Questions extends React.Component {
   state = {
-    current: 0,
+    current: 0
   };
 
   next() {
@@ -28,6 +28,7 @@ class Questions extends React.Component {
             <Step key={index} />
           ))}
         </Steps>
+
         <div>{questions[current]}</div>
         <div>
           {current < questions.length - 1 && (

@@ -11,13 +11,9 @@ const cardStyle = {
 };
 
 const AssignmentDetail = (props) => {
-    const [usersAnswers, setUsersAnswers] = useState({
-        asntId: "",
-        email: "",
-        answer: {}
-    });
+    const [usersAnswers, setUsersAnswers] = useState({});
 
-    
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -30,7 +26,7 @@ const AssignmentDetail = (props) => {
 
     const onChange = (e, qId) => {
 
-        setUsersAnswers({ ...usersAnswers.answers, [qId]: e.target.value });
+        setUsersAnswers({ ...usersAnswers, [qId]: e.target.value });
     };
 
 
@@ -42,8 +38,10 @@ const AssignmentDetail = (props) => {
             answer: usersAnswers
         };
         props.createGradedASNT(asnt);
+        console.log(asnt)
     }
-
+    // console.log(props.assignmentDetail)
+    // console.log(usersAnswers.answer)
     return (
         <>
             {Object.keys(props.assignmentDetail).length > 0 ? (
@@ -52,9 +50,11 @@ const AssignmentDetail = (props) => {
                         <Skeleton active />
                     ) : ( */}
                     <Card title={props.assignmentDetail.title}>
+
                         <Questions
                             submit={() => handleSubmit()}
                             questions={props.assignmentDetail.questions.map(q => {
+
                                 return (
                                     <Card
                                         style={cardStyle}

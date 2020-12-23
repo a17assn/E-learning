@@ -20,8 +20,8 @@ const navbar = withRouter((props) => {
         <Menu.Item key="/">
           <NavLink to="/">Home</NavLink>
         </Menu.Item>
-        <Menu.Item key="/blog">
-          <NavLink to="/blog">Blog</NavLink>
+        <Menu.Item key="/create">
+          <NavLink to="/create">create</NavLink>
         </Menu.Item>
         {props.isAuthenticated
           ? [

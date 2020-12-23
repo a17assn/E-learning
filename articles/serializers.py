@@ -1,4 +1,3 @@
-
 from rest_framework import serializers
 
 from accounts.models import UserAccount
@@ -32,9 +31,10 @@ class AssignmentSerializer(serializers.ModelSerializer):
 
     def create(self, request):
         data = request.data
+        print(data)
 
         assignment = Assignment()
-        teacher = UserAccount.objects.get(username=data['teacher'])
+        teacher = UserAccount.objects.get(email=data['teacher'])
         assignment.teacher = teacher
         assignment.title = data['title']
         assignment.save()

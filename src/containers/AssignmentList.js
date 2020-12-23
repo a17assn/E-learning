@@ -9,16 +9,16 @@ const AssignmentList = (props) => {
 
   console.log(props.assignment);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await props.getASNTS();
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          await props.getASNTS();
 
-      } catch (err) { }
-    };
+        } catch (err) { }
+      };
 
-    fetchData();
-  }, []);
+      fetchData();
+    }, []);
 
 
 

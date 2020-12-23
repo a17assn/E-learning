@@ -4,7 +4,9 @@ import {
   GET_ASSIGNMENT_DETAIL_SUCCESS,
   GET_ASSIGNMENT_DETAIL_FAIL,
   CREATE_ASSIGNMENT_SUCCESS,
-  CREATE_ASSIGNMENT_FAIL
+  CREATE_ASSIGNMENT_FAIL,
+  GET_GRADED_ASSIGNMENTS_LIST_SUCCESS,
+  GET_GRADED_ASSIGNMENTS_LIST_FAIL
 } from "./assignmentTypes";
 
 
@@ -39,6 +41,16 @@ export default function Assignment(state = initialState, action) {
       return {
         ...state,
         assignmentesDetail: "null",
+      };
+    case GET_GRADED_ASSIGNMENTS_LIST_SUCCESS:
+      return {
+        ...state,
+        gradidAssignmentes: payload,
+      };
+    case GET_GRADED_ASSIGNMENTS_LIST_FAIL:
+      return {
+        ...state,
+        gradidAssignmentes: "null",
       };
     case CREATE_ASSIGNMENT_SUCCESS:
       return {
