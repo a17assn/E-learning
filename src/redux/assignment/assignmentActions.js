@@ -7,7 +7,9 @@ import {
   CREATE_ASSIGNMENT_SUCCESS,
   CREATE_ASSIGNMENT_FAIL,
   GET_GRADED_ASSIGNMENTS_LIST_SUCCESS,
-  GET_GRADED_ASSIGNMENTS_LIST_FAIL
+  GET_GRADED_ASSIGNMENTS_LIST_FAIL,
+  CREATE_GRADED_ASSIGNMENTS_LIST_SUCCESS,
+  CREATE_GRADED_ASSIGNMENTS_LIST_FAIL
 } from "./assignmentTypes";
 
 // GET ASSIGNMENT
@@ -51,114 +53,154 @@ export const getASNTS = () => async (dispatch) => {
 
 
 export const getASNTSDetail = (id) => async (dispatch) => {
-  // if (localStorage.getItem("access")) {
-  //   const config = {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `JWT ${localStorage.getItem("access")}`,
-  //       Accept: "application/json",
-  //     },
-  //   };
+  if (localStorage.getItem("access")) {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${localStorage.getItem("access")}`,
+        Accept: "application/json",
+      },
+    };
 
-  try {
-    const res = await axios.get(
-      `${process.env.REACT_APP_API_URL}/assignments/${id}/`,
-      // config
-    );
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/assignments/${id}/`,
+        // config
+      );
 
-    dispatch({
-      type: GET_ASSIGNMENT_DETAIL_SUCCESS,
-      payload: res.data,
-    });
+      dispatch({
+        type: GET_ASSIGNMENT_DETAIL_SUCCESS,
+        payload: res.data,
+      });
 
-  } catch (err) {
+    } catch (err) {
+      dispatch({
+        type: GET_ASSIGNMENT_DETAIL_FAIL,
+      });
+    }
+  } else {
     dispatch({
       type: GET_ASSIGNMENT_DETAIL_FAIL,
     });
   }
-  // } else {
-  //   dispatch({
-  //     type: GET_ASSIGNMENT_DETAIL_FAIL,
-  //   });
-  // }
 };
 
 
 
-
-// CREATE ASSIGNMENT 
-
-export const createGradedASNT = (asnt) => async (dispatch) => {
-  // if (localStorage.getItem("access")) {
-  // const config = {
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //     Authorization: `JWT ${localStorage.getItem("access")}`,
-  //     Accept: "application/json",
-  //   },
-  // };
-
-  try {
-    const res = await axios.post(
-      `${process.env.REACT_APP_API_URL}/graded-assignments/create/`,
-      // config,
-      asnt
-    );
-
-    dispatch({
-      type: GET_GRADED_ASSIGNMENTS_LIST_SUCCESS,
-      payload: res.data,
-    });
-
-  } catch (err) {
-    dispatch({
-      type: GET_GRADED_ASSIGNMENTS_LIST_FAIL,
-    });
-  }
-  // } else {
-  //   dispatch({
-  //     type: GET_ASSIGNMENT_DETAIL_FAIL,
-  //   });
-  // }
-};
 
 
 
 // CREATE ASSIGNMENT 
 
 export const createASNT = (asnt) => async (dispatch) => {
-  // if (localStorage.getItem("access")) {
-  // const config = {
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //     Authorization: `JWT ${localStorage.getItem("access")}`,
-  //     Accept: "application/json",
-  //   },
-  // };
+  if (localStorage.getItem("access")) {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${localStorage.getItem("access")}`,
+        Accept: "application/json",
+      },
+    };
 
-  try {
-    const res = await axios.post(
-      `${process.env.REACT_APP_API_URL}/assignments/`,
-      // config,
-      asnt
-    );
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/assignments/`,
+        // config,
+        asnt
+      );
 
+      dispatch({
+        type: CREATE_ASSIGNMENT_SUCCESS,
+        payload: res.data,
+      });
+
+    } catch (err) {
+      dispatch({
+        type: CREATE_ASSIGNMENT_FAIL,
+      });
+    }
+  } else {
     dispatch({
-      type: CREATE_ASSIGNMENT_SUCCESS,
-      payload: res.data,
-    });
-
-  } catch (err) {
-    dispatch({
-      type: CREATE_ASSIGNMENT_FAIL,
+      type: GET_ASSIGNMENT_DETAIL_FAIL,
     });
   }
-  // } else {
-  //   dispatch({
-  //     type: GET_ASSIGNMENT_DETAIL_FAIL,
-  //   });
-  // }
 };
 
 
 
+
+
+// CREATE graded ASSIGNMENT 
+
+export const getGradedASNT = (asnt) => async (dispatch) => {
+  if (localStorage.getItem("access")) {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${localStorage.getItem("access")}`,
+        Accept: "application/json",
+      },
+    };
+
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/graded-assignments/`,
+        // config,
+        asnt
+      );
+
+      dispatch({
+        type: GET_GRADED_ASSIGNMENTS_LIST_SUCCESS,
+        payload: res.data,
+      });
+
+    } catch (err) {
+      dispatch({
+        type: GET_GRADED_ASSIGNMENTS_LIST_FAIL,
+      });
+    }
+  } else {
+    dispatch({
+      type: GET_GRADED_ASSIGNMENTS_LIST_FAIL,
+    });
+  }
+};
+
+
+
+
+// get graded ASSIGNMENT 
+
+export const createGradedASNT = (asnt) => async (dispatch) => {
+  if (localStorage.getItem("access")) {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${localStorage.getItem("access")}`,
+        Accept: "application/json",
+      },
+    };
+
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/graded-assignments/create/`,
+        // config,
+        asnt
+      );
+
+      dispatch({
+        type: CREATE_GRADED_ASSIGNMENTS_LIST_SUCCESS,
+        payload: res.data,
+      });
+
+    } catch (err) {
+      dispatch({
+        type: CREATE_GRADED_ASSIGNMENTS_LIST_FAIL,
+      });
+    }
+  } else {
+    dispatch({
+      type: CREATE_GRADED_ASSIGNMENTS_LIST_FAIL,
+    });
+  }
+};

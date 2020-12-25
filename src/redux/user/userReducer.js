@@ -12,6 +12,8 @@ import {
   AUTHENTICATED_SUCCESS,
   USER_LOADED_SUCCESS,
   USER_LOADED_FAIL,
+  PEOFILE_SUCCESS,
+  PEOFILE_FAIL
 } from "./userTypes";
 
 const initialState = {
@@ -19,6 +21,7 @@ const initialState = {
   refresh: localStorage.getItem("refresh"),
   isAuthenticated: null,
   user: {},
+  profile:{}
 };
 
 export default function auth(state = initialState, action) {
@@ -43,6 +46,11 @@ export default function auth(state = initialState, action) {
         ...state,
         user: payload,
       };
+    case PEOFILE_SUCCESS:
+      return {
+        ...state,
+        profile: payload,
+      };
     case SIGNUP_SUCCESS:
       return {
         ...state,
@@ -57,6 +65,11 @@ export default function auth(state = initialState, action) {
       return {
         ...state,
         user: null,
+      };
+    case PEOFILE_FAIL:
+      return {
+        ...state,
+        profile: null,
       };
     case SIGNUP_FAIL:
     case LOGIN_FAIL:

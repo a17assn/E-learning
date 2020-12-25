@@ -6,7 +6,9 @@ import {
   CREATE_ASSIGNMENT_SUCCESS,
   CREATE_ASSIGNMENT_FAIL,
   GET_GRADED_ASSIGNMENTS_LIST_SUCCESS,
-  GET_GRADED_ASSIGNMENTS_LIST_FAIL
+  GET_GRADED_ASSIGNMENTS_LIST_FAIL,
+  CREATE_GRADED_ASSIGNMENTS_LIST_SUCCESS,
+  CREATE_GRADED_ASSIGNMENTS_LIST_FAIL
 } from "./assignmentTypes";
 
 
@@ -22,7 +24,6 @@ export default function Assignment(state = initialState, action) {
 
   switch (type) {
     case GET_ASSIGNMENTS_LIST_SUCCESS:
-
       return {
         ...state,
         assignmentes: payload,
@@ -55,12 +56,10 @@ export default function Assignment(state = initialState, action) {
     case CREATE_ASSIGNMENT_SUCCESS:
       return {
         ...state,
-        gradidAssignmentes: payload,
       };
     case CREATE_ASSIGNMENT_FAIL:
       return {
         ...state,
-        gradidAssignmentes: "null",
       };
 
     default:

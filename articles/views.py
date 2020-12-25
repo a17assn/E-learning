@@ -48,16 +48,16 @@
 
 
 # class GradedAssignmentListView(ListAPIView):
-#     serializer_class = GradedAssignmentSerializer
+#     serializer_class = Grad edAssignmentSerializer
 #     permission_classes = (permissions.AllowAny, )
 #     queryset = GradedAssignment.objects.all()
 
-#     # def get_queryset(self):
-#     #     queryset = GradedAssignment.objects.all()
-#     #     username = self.request.query_params.get('username', None)
-#     #     if username is not None:
-#     #         queryset = queryset.filter(student__username=username)
-#     #     return queryset
+    # def get_queryset(self):
+    #     queryset = GradedAssignment.objects.all()
+    #     username = self.request.query_params.get('username', None)
+    #     if username is not None:
+    #         queryset = queryset.filter(student__username=username)
+    #     return queryset
 
 
 # class GradedAssignmentCreateView(CreateAPIView):

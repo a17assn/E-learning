@@ -15,6 +15,8 @@ import {
   USER_LOADED_FAIL,
   AUTHENTICATED_FAIL,
   AUTHENTICATED_SUCCESS,
+  PEOFILE_SUCCESS,
+  PEOFILE_FAIL
 } from "./userTypes";
 
 // check Authenticated
@@ -62,6 +64,7 @@ export const checkAuthenticated = () => async (dispatch) => {
   }
 };
 
+
 // load user
 
 export const load_user = () => async (dispatch) => {
@@ -92,6 +95,41 @@ export const load_user = () => async (dispatch) => {
   } else {
     dispatch({
       type: USER_LOADED_FAIL,
+    });
+  }
+};
+
+// load profile
+
+export const load_profile = (userid) => async (dispatch) => {
+  if (localStorage.getItem("access")) {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${localStorage.getItem("access")}`,
+        Accept: "application/json",
+      },
+    };
+
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/accounts/${userid}/`,
+        config
+      );
+
+      dispatch({
+        type: PEOFILE_SUCCESS,
+        payload: res.data,
+      });
+
+    } catch (err) {
+      dispatch({
+        type: PEOFILE_FAIL,
+      });
+    }
+  } else {
+    dispatch({
+      type: PEOFILE_FAIL,
     });
   }
 };

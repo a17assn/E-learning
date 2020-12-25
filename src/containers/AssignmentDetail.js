@@ -26,7 +26,7 @@ const AssignmentDetail = (props) => {
 
     const onChange = (e, qId) => {
 
-        setUsersAnswers({ ...usersAnswers, [qId]: e.target.value });
+        setUsersAnswers({ ...usersAnswers, [qId]: e.target.value });    
     };
 
 
@@ -41,7 +41,7 @@ const AssignmentDetail = (props) => {
         console.log(asnt)
     }
     // console.log(props.assignmentDetail)
-    // console.log(usersAnswers.answer)
+    console.log(usersAnswers)
     return (
         <>
             {Object.keys(props.assignmentDetail).length > 0 ? (

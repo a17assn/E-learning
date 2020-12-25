@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-
+import { List, Divider } from "antd";
+import Result from '../components/Result';
 import "./login.css";
 import axios from "axios";
+import { getGradedASNT } from "../redux";
 
 const Profile = (props) => {
   const [profile, setProfile] = useState({});
 
-  console.log(props.user);
   console.log(profile);
+  console.log(props.gradedAssignments);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,18 +32,54 @@ const Profile = (props) => {
     fetchData();
   }, [props.user]);
 
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await props.getGradedASNT(props.match.params.id);
+      } catch (err) { }
+    };
+    fetchData();
+  }, []);
+
+
+
   return (
     <div>
       <h1>Sign In</h1>
       <p>Sign into your Account</p>
-      {/* <p>{props.user}</p> */}
       <p>{profile.id}</p>
+
+      <Divider orientation="left">Large Size</Divider>
+      <List
+        size="large"
+
+        bordered
+        dataSource={props.gradedAssignments}
+        renderItem={a => <Result key={a.id} grade={a.grade} />}
+      />
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
+  gradedAssignments: state.Assignment.gradidAssignmentes,
+
 });
 
-export default connect(mapStateToProps)(Profile);
+const mapDispatchToProps = dispatch => {
+  return {
+    getGradedASNT: (asnt) => dispatch(getGradedASNT(asnt))
+  };
+};
+
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Profile);
+
+
+
