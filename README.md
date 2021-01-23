@@ -1,5 +1,4 @@
 # project
 
-django with react E-learning
+django with react Quiz App
 
-# E-learning
